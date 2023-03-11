@@ -141,4 +141,29 @@ public class TableInfo{
 			
 		}
 		
+		public String BigString(){
+			StringBuilder sb = new StringBuilder();
+			sb.append(ID);
+			sb.append(";");
+			sb.append(Tam);
+			sb.append(";");
+			sb.append(Type);
+			sb.append(";");
+			sb.append(Director);
+			sb.append(";");
+			sb.append(Cast);
+			sb.append(";");
+			sb.append(Country);
+			sb.append(";");
+			sb.append(Date_Added);
+			sb.append(";");
+			sb.append(Release_Year);
+			sb.append(";");
+			sb.append(Rate);
+			sb.append(";");
+			sb.append(Duration);
+			sb.append("/");
+			return sb.toString();
+		}
+		
 }

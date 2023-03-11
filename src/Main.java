@@ -2,16 +2,20 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 
 public class Main {
 	
   public static void main(String[] args) {
 	//READ ALL / LE TUDO
     BufferedReader br = null;
+    RandomAccessFile raf = null;
+    
     String linha = "";
     try {
 
     	br = new BufferedReader(new FileReader("src/netflix_titles_2021.csv"));
+    	raf = new RandomAccessFile("netflix.db", "rw");
         while ((linha = br.readLine()) != null){
         	
             String archive[] =  new String[10];
@@ -19,6 +23,8 @@ public class Main {
             TableInfo tb = new TableInfo();
             
             tb.setALL(archive);
+            
+            raf.write(tb.BigString().getBytes());
             
             tb.printAll();
             
@@ -35,11 +41,11 @@ public class Main {
         e.printStackTrace();
         }
     }
-	//READ ALL / LE TUDO
-	  
-	//CREATE
-	  
-	//CREATE
-	  // id(auto) - 
+    try {
+		raf.close();
+	} catch (IOException e) {
+
+		e.printStackTrace();
+	}
   }
 }
