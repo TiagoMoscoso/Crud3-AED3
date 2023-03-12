@@ -14,6 +14,7 @@ public class TableInfo{
 		
 
 		TableInfo(){
+			//construtor
     		Type[0] = '?';
     		Director[0] = '?';
     		Cast[0] = '?';
@@ -23,16 +24,17 @@ public class TableInfo{
     		Duration[0] = '?';
     		setTam();
     	}
-    
+		//Funcoes para definir variaveis
+		/////////////////////////////////////////////////////////////////////////
 		public void setTam(){
 			int x =  Type.length + Director.length + Cast.length + Country.length + Date_Added.length + Release_Year.length + Rate.length + Duration.length;
 			this.Tam = Integer.toHexString(x).toCharArray();
+			//define tamanho em hexadecimal de arcordo com tamanho das variaveis
 		}
-		
 		public void setID(String NewID){
 			ID = Integer.parseInt(NewID);
 		}
-		
+		//polimorfismo em ID em caso de entrada em String ou Int
 		public void setID(int NewID){
 			ID = NewID;
 		}
@@ -77,7 +79,9 @@ public class TableInfo{
 			this.Duration = NewDuration.toCharArray();
 			setTam();
 		}
+		/////////////////////////////////////////////////////////////////////////
 		
+		//funcao para definir todos as variaveis por array
 		public void setALL(String allstrings[])
 		{
 			for(int x = 0; x < allstrings.length; x++)
@@ -118,6 +122,8 @@ public class TableInfo{
 			}
 		}
 		
+		
+		//funcao para printar no console
 		public void printAll(){
 			System.out.print(ID);
 			System.out.print(";");
@@ -141,6 +147,7 @@ public class TableInfo{
 			
 		}
 		
+		//funcao para transformar todas variaveis em uma unica string
 		public String BigString(){
 			StringBuilder sb = new StringBuilder();
 			sb.append(ID);
