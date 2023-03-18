@@ -23,13 +23,15 @@ public class Main {
 				System.out.println(charNav);
 				if(charNav==';')
 				{
+					
 					where++;
 					if(where > 2)
 					{
 						where = 0;
-						System.out.println(sb);
-						pos = pos + Integer.parseInt(sb.toString(), 16)-1;
-						db.seek(pos);
+						if(sb.equals("") != true){
+							pos = pos + Integer.parseInt(sb.toString(), 16)-1;
+							db.seek(pos);
+						}
 					}
 					sb.setLength(0);
 				}
