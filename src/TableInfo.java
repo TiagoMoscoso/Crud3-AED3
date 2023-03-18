@@ -2,7 +2,8 @@
 public class TableInfo{
 	
 		int ID;	 
-		String 	Type; 
+		String 	Type= new String();
+		String 	Title = new String();
 		String  Director= new String(); 
 		String  Cast= new String(); 
 		String  Country= new String(); 
@@ -15,6 +16,7 @@ public class TableInfo{
 		TableInfo(){
 			//construtor
     		Type = "?";
+			Title = "?";
     		Director = "?";
 			Country = "?";
     		Cast = "?";
@@ -34,7 +36,13 @@ public class TableInfo{
 			ID = NewID;
 		}
 		
-		
+		public void setTitle(String NewTitle){
+			if(NewTitle != " " && NewTitle != "")
+				this.Title= NewTitle;
+			else
+				this.Title= "?";
+		}
+
 		public void setType(String NewType){
 			if(NewType != " " && NewType != "")
 				this.Type = NewType;
@@ -106,24 +114,27 @@ public class TableInfo{
 					setType(allstrings[x]);
 					break;
 				case 2:
-					setDirector(allstrings[x]);
+					setTitle(allstrings[x]);
 					break;
 				case 3:
-					setCast(allstrings[x]);
+					setDirector(allstrings[x]);
 					break;
 				case 4:
-					setCountry(allstrings[x]);
+					setCast(allstrings[x]);
 					break;
 				case 5:
-					setDate_Added(allstrings[x]);
+					setCountry(allstrings[x]);
 					break;
 				case 6:
-					setRelease_Year(allstrings[x]);
+					setDate_Added(allstrings[x]);
 					break;
 				case 7:
-					setRate(allstrings[x]);
+					setRelease_Year(allstrings[x]);
 					break;
 				case 8:
+					setRate(allstrings[x]);
+					break;
+				case 9:
 					setDuration(allstrings[x]);
 					break;
 				default:
@@ -137,6 +148,8 @@ public class TableInfo{
 		//funcao para printar no console
 		public void printAll(){
 			System.out.print(ID);
+			System.out.print(";");
+			System.out.print(Title);
 			System.out.print(";");
 			System.out.print(Type);
 			System.out.print(";");
@@ -163,6 +176,8 @@ public class TableInfo{
 			sb.append(" ");
 			sb.append(Integer.toHexString(Type.length()+2));
 			sb.append(" " + Type + " ");
+			sb.append(Integer.toHexString(Title.length()+2));
+			sb.append(" " + Title + " ");
 			sb.append(Integer.toHexString(Director.length()+2));
 			sb.append(" " + Director+ " ");
 			sb.append(Integer.toHexString(Cast.length()+2));
@@ -180,5 +195,89 @@ public class TableInfo{
 			System.out.println(sb);
 			return sb.toString();
 		}
-	
+		
+		public void DecompresSwitch(int x, StringBuilder value)
+		{
+			switch(x)
+			{
+				case 1:
+					setType(value.toString());
+					System.out.print("Inserindo tipo:");
+					System.out.println(value);
+					break;
+				case 2:
+					setTitle(value.toString());
+					System.out.print("Inserindo titulo:");
+					System.out.println(value);
+					break;
+				case 3:
+					setDirector(value.toString());
+					System.out.print("Inserindo Diretor:");
+					System.out.println(value);
+					break;
+				case 4:
+					setCast(value.toString());
+					System.out.print("Inserindo Elenco:");
+					System.out.println(value);
+				break;
+				case 5:
+					setCountry(value.toString());
+					System.out.print("Inserindo Pais:");
+					System.out.println(value);
+					break;
+				case 6:
+					setDate_Added(value.toString());
+					System.out.print("Inserindo Data de adição:");
+					System.out.println(value);
+					break;
+				case 7:
+					setRelease_Year(value.toString());
+					System.out.print("Inserindo ano:");
+					System.out.println(value);
+					break;
+				case 8:
+					setRate(value.toString());
+					System.out.print("Inserindo avaliacao:");
+					System.out.println(value);
+					break;
+				case 9:
+					setDuration(value.toString());
+					System.out.print("Inserindo Duracao:");
+					System.out.println(value);
+					break;
+			}	
+		}
+
+		public void DecompresString(String textUTF)
+		{
+			Integer nextposic = new Integer(1);
+			Integer oldpos = new Integer(1);
+			int where = 0;
+			StringBuilder value = new StringBuilder();
+			System.out.print(textUTF);
+
+			for(int pos = 0; pos < textUTF.length(); pos++)
+			{	System.out.println(where);
+				if(pos != nextposic + oldpos && pos < textUTF.length()-1)
+				{
+					//System.out.print(textUTF.charAt(pos));
+					value.append(textUTF.charAt(pos));
+				}
+				else{
+					if(pos < textUTF.length()-1){
+						StringBuilder temp = new StringBuilder();
+						while(textUTF.charAt(pos) != ' ')
+						{
+							temp.append(textUTF.charAt(pos));
+							pos++;
+						}
+						nextposic = Integer.parseInt(temp.toString(),16);
+						oldpos = pos;
+					}
+					DecompresSwitch(where, value);
+					value = new StringBuilder();
+					where++;
+				}
+			}
+		}
 }
