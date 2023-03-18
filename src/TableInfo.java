@@ -1,38 +1,33 @@
 
 public class TableInfo{
 	
-		int ID; 
-		char Tam[] = new char[1]; 
-		char Type [] = new char[1]; 
-		char Director [] = new char[1]; 
-		char Cast [] = new char[1]; 
-		char Country [] = new char[1]; 
-		char Date_Added [] = new char[1]; 
-		char Release_Year [] = new char[1]; 
-		char Rate [] = new char[1]; 
-		char Duration [] = new char[1];
+		int ID;	 
+		String 	Type; 
+		String  Director= new String(); 
+		String  Cast= new String(); 
+		String  Country= new String(); 
+		String  Date_Added= new String(); 
+		String  Release_Year= new String(); 
+		String  Rate= new String(); 
+		String 	Duration= new String();
 		
 
 		TableInfo(){
 			//construtor
-    		Type[0] = '?';
-    		Director[0] = '?';
-    		Cast[0] = '?';
-    		Date_Added[0] = '?';
-    		Release_Year[0] = '?';
-    		Rate[0] = '?';
-    		Duration[0] = '?';
-    		setTam();
+    		Type = "?";
+    		Director = "?";
+			Country = "?";
+    		Cast = "?";
+    		Date_Added = "?";
+    		Release_Year = "?";
+    		Rate = "?";
+    		Duration = "?";
     	}
 		//Funcoes para definir variaveis
 		/////////////////////////////////////////////////////////////////////////
-		public void setTam(){
-			int x =  Type.length + Director.length + Cast.length + Country.length + Date_Added.length + Release_Year.length + Rate.length + Duration.length + 9;
-			this.Tam = Integer.toHexString(x).toCharArray();
-			//define tamanho em hexadecimal de arcordo com tamanho das variaveis
-		}
 		public void setID(String NewID){
-			ID = Integer.parseInt(NewID);
+			if(NewID != " " && NewID != "")
+				ID = Integer.parseInt(NewID);
 		}
 		//polimorfismo em ID em caso de entrada em String ou Int
 		public void setID(int NewID){
@@ -41,43 +36,59 @@ public class TableInfo{
 		
 		
 		public void setType(String NewType){
-			this.Type = NewType.toCharArray();
-			setTam();
+			if(NewType != " " && NewType != "")
+				this.Type = NewType;
+			else
+				this.Type = "?";
 		}
 		
 		public void setDirector(String NewDirector){
-			this.Director = NewDirector.toCharArray();
-			setTam();
+			if(NewDirector != " " && NewDirector != "")
+				this.Director = NewDirector;
+			else
+				this.Director = "?";
 		}
 		
 		public void setCast(String NewCast){
-			this.Cast = NewCast.toCharArray();
-			setTam();
+			if(NewCast != " " && NewCast != "")
+				this.Cast = NewCast;
+			else
+				this.Cast = "?";
 		}
 		
 		public void setCountry(String NewCountry){
-			this.Country = NewCountry.toCharArray();
-			setTam();
+			if(NewCountry != " " && NewCountry != "")
+				this.Country = NewCountry;
+			else
+				this.Country = "?";
 		}
 		
 		public void setDate_Added(String NewDate_Added){
-			this.Date_Added = NewDate_Added.toCharArray();
-			setTam();
+			if(NewDate_Added != " " && NewDate_Added != "")
+				this.Date_Added = NewDate_Added;
+			else
+				this.Date_Added = "?";
 		}
 		
 		public void setRelease_Year(String NewRelease_Year){
-			this.Release_Year = NewRelease_Year.toCharArray();
-			setTam();
+			if(NewRelease_Year!= " " && NewRelease_Year != "")
+				this.Release_Year = NewRelease_Year;
+			else
+				this.Release_Year = "?";
 		}
 		
 		public void setRate(String NewRate){
-			this.Rate = NewRate.toCharArray();
-			setTam();
+			if(NewRate!= " " && NewRate!= "")
+				this.Rate = NewRate;
+			else
+				this.Rate = "?";
 		}
 		
 		public void setDuration(String NewDuration){
-			this.Duration = NewDuration.toCharArray();
-			setTam();
+			if(NewDuration!= " " && NewDuration!= "")
+				this.Duration = NewDuration;
+			else
+				this.Duration = "?";
 		}
 		/////////////////////////////////////////////////////////////////////////
 		
@@ -127,8 +138,6 @@ public class TableInfo{
 		public void printAll(){
 			System.out.print(ID);
 			System.out.print(";");
-			System.out.print(Tam);
-			System.out.print(";");
 			System.out.print(Type);
 			System.out.print(";");
 			System.out.print(Director);
@@ -150,28 +159,24 @@ public class TableInfo{
 		//funcao para transformar todas variaveis em uma unica string
 		public String BigString(){
 			StringBuilder sb = new StringBuilder();
-			sb.append(ID);
-			sb.append(";");
+			sb.append(1);
 			sb.append(" ");
-			sb.append(";");
-			sb.append(Tam);
-			sb.append(";");
-			sb.append(Type);
-			sb.append(";");
-			sb.append(Director);
-			sb.append(";");
-			sb.append(Cast);
-			sb.append(";");
-			sb.append(Country);
-			sb.append(";");
-			sb.append(Date_Added);
-			sb.append(";");
-			sb.append(Release_Year);
-			sb.append(";");
-			sb.append(Rate);
-			sb.append(";");
-			sb.append(Duration);
-			sb.append(";");
+			sb.append(Integer.toHexString(Type.length()+2));
+			sb.append(" " + Type + " ");
+			sb.append(Integer.toHexString(Director.length()+2));
+			sb.append(" " + Director+ " ");
+			sb.append(Integer.toHexString(Cast.length()+2));
+			sb.append(" " + Cast+ " ");
+			sb.append(Integer.toHexString(Country.length()+2));
+			sb.append(" " + Country + " ");
+			sb.append(Integer.toHexString(Date_Added.length()+2));
+			sb.append(" " + Date_Added+ " ");
+			sb.append(Integer.toHexString(Release_Year.length()+2));
+			sb.append(" " + Release_Year+ " ");
+			sb.append(Integer.toHexString(Rate.length()+2));
+			sb.append(" " + Rate+ " ");
+			sb.append(Integer.toHexString(Duration.length()+2));
+			sb.append(" " + Duration+ " ");
 			System.out.println(sb);
 			return sb.toString();
 		}
