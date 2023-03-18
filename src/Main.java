@@ -5,6 +5,47 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class Main {
+
+	
+	@SuppressWarnings("unlikely-arg-type")
+	public static void SearchPos(RandomAccessFile db, Integer search){
+		try {
+			db.seek(0);
+			char charNav = (char) db.read();
+			long pos = 1;
+			int where = 0;
+			StringBuilder sb = new StringBuilder(); 
+			
+			while(sb.equals(search.toString()) == false || where != 0 ||charNav==';')
+			{
+				charNav = (char) db.read();
+				pos++;
+				System.out.println(charNav);
+				if(charNav==';')
+				{
+					where++;
+					if(where > 2)
+					{
+						where = 0;
+						System.out.println(sb);
+						pos = pos + Integer.parseInt(sb.toString(), 16)-1;
+						db.seek(pos);
+					}
+					sb.setLength(0);
+				}
+				else{
+					if(charNav !=' ') {
+					sb.append(charNav);
+					}
+				}
+				
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
   public static void main(String[] args) {
 	//READ ALL / LE TUDO
@@ -19,7 +60,7 @@ public class Main {
     try {
 
     	br = new BufferedReader(new FileReader("src/netflix_titles_2021.csv")); 
-    	raf = new RandomAccessFile("netflix.db", "rw");
+    	raf = new RandomAccessFile("src/netflix.db", "rw");
     	
         while ((linha = br.readLine()) != null){
         	//Lee arquivo csv e transcreve para classe TableInfo que depois transcreve para o db
@@ -35,10 +76,10 @@ public class Main {
             
             raf.write(tb.BigString().getBytes());	//passa objeto tb para arquivo ja configurado 
             
-            tb.printAll();							//printa as variaveis do objeto tb
+            //tb.printAll();							//printa as variaveis do objeto tb
             
         }
-
+     SearchPos(raf,100);
     } catch (IOException e) {
 		e.printStackTrace();	// em caso de erro
 	}

@@ -27,7 +27,7 @@ public class TableInfo{
 		//Funcoes para definir variaveis
 		/////////////////////////////////////////////////////////////////////////
 		public void setTam(){
-			int x =  Type.length + Director.length + Cast.length + Country.length + Date_Added.length + Release_Year.length + Rate.length + Duration.length;
+			int x =  Type.length + Director.length + Cast.length + Country.length + Date_Added.length + Release_Year.length + Rate.length + Duration.length + 9;
 			this.Tam = Integer.toHexString(x).toCharArray();
 			//define tamanho em hexadecimal de arcordo com tamanho das variaveis
 		}
@@ -152,6 +152,8 @@ public class TableInfo{
 			StringBuilder sb = new StringBuilder();
 			sb.append(ID);
 			sb.append(";");
+			sb.append(" ");
+			sb.append(";");
 			sb.append(Tam);
 			sb.append(";");
 			sb.append(Type);
@@ -169,8 +171,9 @@ public class TableInfo{
 			sb.append(Rate);
 			sb.append(";");
 			sb.append(Duration);
-			sb.append("/");
+			sb.append(";");
+			System.out.println(sb);
 			return sb.toString();
 		}
-		
+	
 }
