@@ -1,7 +1,8 @@
 
 public class TableInfo{
 	
-		int ID;	 
+		int ID;
+		boolean del = new Boolean(false);	 
 		String 	Type= new String();
 		String 	Title = new String();
 		String  Director= new String(); 
@@ -16,6 +17,7 @@ public class TableInfo{
 		TableInfo(){
 			//construtor
     		Type = "?";
+			del = false;
 			Title = "?";
     		Director = "?";
 			Country = "?";
@@ -173,25 +175,32 @@ public class TableInfo{
 		public String BigString(){
 			StringBuilder sb = new StringBuilder();
 			sb.append(1);
+			if(del == false)
+			{
 			sb.append(" ");
-			sb.append(Integer.toHexString(Type.length()+2));
-			sb.append(" " + Type + " ");
-			sb.append(Integer.toHexString(Title.length()+2));
-			sb.append(" " + Title + " ");
-			sb.append(Integer.toHexString(Director.length()+2));
-			sb.append(" " + Director+ " ");
-			sb.append(Integer.toHexString(Cast.length()+2));
-			sb.append(" " + Cast+ " ");
-			sb.append(Integer.toHexString(Country.length()+2));
-			sb.append(" " + Country + " ");
-			sb.append(Integer.toHexString(Date_Added.length()+2));
-			sb.append(" " + Date_Added+ " ");
-			sb.append(Integer.toHexString(Release_Year.length()+2));
-			sb.append(" " + Release_Year+ " ");
-			sb.append(Integer.toHexString(Rate.length()+2));
-			sb.append(" " + Rate+ " ");
-			sb.append(Integer.toHexString(Duration.length()+2));
-			sb.append(" " + Duration+ " ");
+			}
+			else
+			{
+			sb.append("*");
+			}
+			sb.append(Integer.toHexString(Type.length()+1));
+			sb.append(" " + Type);
+			sb.append(Integer.toHexString(Title.length()+1));
+			sb.append(" " + Title);
+			sb.append(Integer.toHexString(Director.length()+1));
+			sb.append(" " + Director);
+			sb.append(Integer.toHexString(Cast.length()+1));
+			sb.append(" " + Cast);
+			sb.append(Integer.toHexString(Country.length()+1));
+			sb.append(" " + Country);
+			sb.append(Integer.toHexString(Date_Added.length()+1));
+			sb.append(" " + Date_Added);
+			sb.append(Integer.toHexString(Release_Year.length()+1));
+			sb.append(" " + Release_Year);
+			sb.append(Integer.toHexString(Rate.length()+1));
+			sb.append(" " + Rate);
+			sb.append(Integer.toHexString(Duration.length()+1));
+			sb.append(" " + Duration);
 			System.out.println(sb);
 			return sb.toString();
 		}
@@ -200,49 +209,47 @@ public class TableInfo{
 		{
 			switch(x)
 			{
+				case 0:
+				System.out.println(value);
+				if(value.toString() == "*")
+				{
+					Delete();
+				}
+				break;
 				case 1:
 					setType(value.toString());
-					System.out.print("Inserindo tipo:");
 					System.out.println(value);
 					break;
 				case 2:
 					setTitle(value.toString());
-					System.out.print("Inserindo titulo:");
 					System.out.println(value);
 					break;
 				case 3:
 					setDirector(value.toString());
-					System.out.print("Inserindo Diretor:");
 					System.out.println(value);
 					break;
 				case 4:
 					setCast(value.toString());
-					System.out.print("Inserindo Elenco:");
 					System.out.println(value);
 				break;
 				case 5:
 					setCountry(value.toString());
-					System.out.print("Inserindo Pais:");
 					System.out.println(value);
 					break;
 				case 6:
 					setDate_Added(value.toString());
-					System.out.print("Inserindo Data de adição:");
 					System.out.println(value);
 					break;
 				case 7:
 					setRelease_Year(value.toString());
-					System.out.print("Inserindo ano:");
 					System.out.println(value);
 					break;
 				case 8:
 					setRate(value.toString());
-					System.out.print("Inserindo avaliacao:");
 					System.out.println(value);
 					break;
 				case 9:
 					setDuration(value.toString());
-					System.out.print("Inserindo Duracao:");
 					System.out.println(value);
 					break;
 			}	
@@ -250,14 +257,14 @@ public class TableInfo{
 
 		public void DecompresString(String textUTF)
 		{
-			Integer nextposic = new Integer(1);
-			Integer oldpos = new Integer(1);
+			Integer nextposic = 1;
+			Integer oldpos = 1;
 			int where = 0;
 			StringBuilder value = new StringBuilder();
-			System.out.print(textUTF);
+			//System.out.print(textUTF);
 
 			for(int pos = 0; pos < textUTF.length(); pos++)
-			{	System.out.println(where);
+			{	
 				if(pos != nextposic + oldpos && pos < textUTF.length()-1)
 				{
 					//System.out.print(textUTF.charAt(pos));
@@ -280,4 +287,68 @@ public class TableInfo{
 				}
 			}
 		}
+
+		public String Dif(int takedif, String text)
+		{
+			//WORK
+			StringBuilder append = new StringBuilder();
+			append.append(text);
+			if(takedif<0){
+				while(takedif < 0)
+				{
+					append.append(" ");
+					takedif++;
+				}
+			}
+			return append.toString();
+		}
+
+		public void update(int x, String text) {
+			//WORK
+			int takedif = 0;
+			switch(x)
+            {
+            case 1:
+				takedif = text.length() - Type.length();
+                setType( Dif(takedif,text) );
+                break;
+            case 2:
+				takedif = text.length() - Title.length();
+                setTitle(Dif(takedif,text));
+				break;
+			case 3:
+				takedif = text.length() - Director.length();
+                setDirector(Dif(takedif,text));
+				break;
+			case 4:
+				takedif = text.length() - Cast.length();
+                setCast(Dif(takedif,text));
+				break;
+			case 5:
+				takedif = text.length() - Country.length();
+                setCountry(Dif(takedif,text));
+				break;
+			case 6:
+				takedif = text.length() - Date_Added.length();
+                setDate_Added(Dif(takedif,text));
+				break;
+			case 7:
+				takedif = text.length() - Release_Year.length();
+                setRelease_Year(Dif(takedif,text));
+				break;
+			case 8:
+				takedif = text.length() - Rate.length();
+                setRate(Dif(takedif,text));
+				break;
+			case 9:
+				takedif = text.length() - Duration.length();
+				setDuration(Dif(takedif,text));
+				break;
+			}
+		}
+	
+	public void Delete()
+	{
+		del = true;
+	}
 }
