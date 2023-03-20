@@ -174,14 +174,16 @@ public class TableInfo{
 		//funcao para transformar todas variaveis em uma unica string
 		public String BigString(){
 			StringBuilder sb = new StringBuilder();
-			sb.append(1);
+			sb.append(Integer.toHexString(ID));
+			sb.append(" ");
+			sb.append("2");
 			if(del == false)
 			{
-			sb.append(" ");
+			sb.append("  ");
 			}
 			else
 			{
-			sb.append("*");
+			sb.append(" *");
 			}
 			sb.append(Integer.toHexString(Type.length()+1));
 			sb.append(" " + Type);
@@ -210,45 +212,49 @@ public class TableInfo{
 			switch(x)
 			{
 				case 0:
-				System.out.println(value);
-				if(value.toString() == "*")
-				{
-					Delete();
-				}
+					setID(Integer.parseInt(value.toString(),16));
+					System.out.println(value);
 				break;
 				case 1:
+					if(value.toString() == "*")
+					{
+						Delete();
+					}
+					System.out.println(value);
+				break;
+				case 2:
 					setType(value.toString());
 					System.out.println(value);
 					break;
-				case 2:
+				case 3:
 					setTitle(value.toString());
 					System.out.println(value);
 					break;
-				case 3:
+				case 4:
 					setDirector(value.toString());
 					System.out.println(value);
 					break;
-				case 4:
+				case 5:
 					setCast(value.toString());
 					System.out.println(value);
 				break;
-				case 5:
+				case 6:
 					setCountry(value.toString());
 					System.out.println(value);
 					break;
-				case 6:
+				case 7:
 					setDate_Added(value.toString());
 					System.out.println(value);
 					break;
-				case 7:
+				case 8:
 					setRelease_Year(value.toString());
 					System.out.println(value);
 					break;
-				case 8:
+				case 9:
 					setRate(value.toString());
 					System.out.println(value);
 					break;
-				case 9:
+				case 10:
 					setDuration(value.toString());
 					System.out.println(value);
 					break;
@@ -256,18 +262,27 @@ public class TableInfo{
 		}
 
 		public void DecompresString(String textUTF)
-		{
-			Integer nextposic = 1;
-			Integer oldpos = 1;
+		{	
+			Integer pos = 0;
+			Integer nextposic = 0;
+			Integer oldpos = 0;
 			int where = 0;
 			StringBuilder value = new StringBuilder();
-			//System.out.print(textUTF);
+			System.out.print(textUTF);
 
-			for(int pos = 0; pos < textUTF.length(); pos++)
+			while(textUTF.charAt(pos) != ' ')
+			{
+				value.append(textUTF.charAt(pos));
+				pos++;
+			}
+			DecompresSwitch(where, value);
+			pos++;
+			value = new StringBuilder();
+			while(pos < textUTF.length())
 			{	
-				if(pos != nextposic + oldpos && pos < textUTF.length()-1)
+				if(pos < nextposic + oldpos && pos < textUTF.length()-1)
 				{
-					//System.out.print(textUTF.charAt(pos));
+					System.out.print(textUTF.charAt(pos));
 					value.append(textUTF.charAt(pos));
 				}
 				else{
@@ -281,10 +296,13 @@ public class TableInfo{
 						nextposic = Integer.parseInt(temp.toString(),16);
 						oldpos = pos;
 					}
-					DecompresSwitch(where, value);
-					value = new StringBuilder();
+					if(where > 0){
+						DecompresSwitch(where, value);
+						value = new StringBuilder();
+					}
 					where++;
 				}
+				pos++;
 			}
 		}
 
@@ -310,7 +328,7 @@ public class TableInfo{
             {
             case 1:
 				takedif = text.length() - Type.length();
-                setType( Dif(takedif,text) );
+                setType(Dif(takedif,text) );
                 break;
             case 2:
 				takedif = text.length() - Title.length();

@@ -25,21 +25,15 @@ public class Main {
 
       raf = new RandomAccessFile("netflix.db", "rw");
     	Crud.CreateArch(br, dos);
-
       Crud.Read(raf);
-      System.out.println(Crud.GetTam(raf));
 
-      Crud.Uptade(raf,2,1,"Movie");
-      Crud.Uptade(raf,2,2,"Filme");
-      Crud.Uptade(raf,2,3,"Piçola");
-      Crud.Uptade(raf,2,4,"Daddy");
-      Crud.Uptade(raf,2,5,"Romenia");
-      Crud.Uptade(raf,2,6,"2023");
-      Crud.Uptade(raf,2,7,"2022");
-      Crud.Uptade(raf,2,8,"+18");
-      Crud.Uptade(raf,2,9,"5 segundos");
-      Crud.Delete(raf, 2); //BUG DELETE?
-      Crud.Search(raf,2);
+      System.out.println(Crud.GetTam(raf));
+      Crud.Search(raf,4);
+      Crud.Search(raf,3);
+
+      Crud.Update(raf, 1, 1, "test");
+      System.out.println(Crud.Search(raf,1));
+      
 
     } catch (IOException e) {
 		e.printStackTrace();	// em caso de erro

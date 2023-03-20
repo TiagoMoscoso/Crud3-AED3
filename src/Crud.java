@@ -12,7 +12,6 @@ public class Crud {
             while ((linha = br.readLine()) != null){
                 tb.setALL(linha.split(";"));			
                 String temp = tb.BigString();
-                dos.writeUTF(Integer.toHexString(tb.ID));
                 dos.writeUTF(temp);
             }
         }catch (IOException e) {
@@ -27,53 +26,44 @@ public class Crud {
     public static void Read(RandomAccessFile raf){
         //WORK
         TableInfo tb = new TableInfo();
-        int where = 0;
         try{
             raf.seek(0);
             String line = raf.readUTF();
             while (line != null){
                 
-                if(where == 0)
-                {
-                    tb.setID(Integer.parseInt(line,16));
-                    where ++;
-                }
-                else{
-                    tb.DecompresString(line);
-                    System.out.println("meu id: " + tb.ID);
-                    where = 0;
-                }
+                tb.DecompresString(line);
+                System.out.println("meu id: " + tb.ID);
                 line = raf.readUTF();
             }
         }catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("FIM DA EXECUÇÃO");
         }
     }
-    public static void Uptade(RandomAccessFile raf, int SearchID, int x, String text){
+    public static void Update(RandomAccessFile raf, int SearchID, int x, String text){
         //WORK
         TableInfo tb = new TableInfo();
         try {
-            long pos = Search(raf,SearchID,tb);
+            long pos = Search(raf,SearchID);
             raf.seek(pos);
             tb.DecompresString(raf.readUTF());
-            tb.update(x,text);
             raf.seek(pos);
-            raf.writeUTF(tb.BigString());
+            tb.update(x,text);
+             raf.writeUTF(tb.BigString());
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
     public static void Delete(RandomAccessFile raf, int SearchID){
-        //DONT WORK
+        //
         TableInfo tb = new TableInfo();
         try {
-            long pos = Search(raf,SearchID,tb);
+            long pos = Search(raf,SearchID);
             raf.seek(pos);
             tb.DecompresString(raf.readUTF());
             tb.Delete();
             raf.seek(pos);
-            raf.writeUTF(tb.BigString());
+            raf.write(tb.BigString().getBytes("UTF-8"));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -85,13 +75,13 @@ public class Crud {
         TableInfo tb = new TableInfo();
         try{
             raf.seek(0);
-            raf.skipBytes(3);
             tb.DecompresString(raf.readUTF());
 
 
         }catch(IOException e) {
             e.printStackTrace();
         }
+
         int tamanho = Integer.parseInt(tb.Type);
         return tamanho;
     }
@@ -100,7 +90,6 @@ public class Crud {
     public static long Search(RandomAccessFile raf, int SearchID, TableInfo tb){
         //WORK
         long ponteiro = -1;
-        int where = 0;
         int posId = 0;
         int maxtam = GetTam(raf);
         boolean found = false;
@@ -109,35 +98,24 @@ public class Crud {
             raf.seek(0);
             String line = raf.readUTF();
             while (line != null && found != true){
-                if(where == 0)
-                {
-                    posId = Integer.parseInt(line,16);
-                    if(posId >= SearchID)
-                    {   
-                        ponteiro = raf.getFilePointer();
-                        tb.DecompresString(line);
-                        found = true;
-                        if(tb.del == true)
-                        {
-                            posId++;
-                        }
-                    }
-                    where ++;
+                if(posId >= SearchID)
+                {   
+                    ponteiro = raf.getFilePointer();
+                    tb.DecompresString(line);
+                    found = true;
                 }
-                else{
-                    where=0;
-                }
+                ponteiro = raf.getFilePointer();
+                posId++;
                 line = raf.readUTF();
             }
             
-            if(posId != SearchID)
+            if(tb.ID != SearchID && tb.del != true)
             {
                 System.out.println("Nao achei o : " + SearchID);
                 ponteiro = -1;
             }
             else{
                 System.out.println("Achei o : " + SearchID);
-                tb.DecompresString(line);
                 tb.printAll();
             }
         }catch (IOException e) {
@@ -149,50 +127,41 @@ public class Crud {
 
     public static long Search(RandomAccessFile raf, int SearchID){
         //WORK
+        TableInfo tb = new TableInfo();
+        long lastponteiro = -1;
         long ponteiro = -1;
-        int where = 0;
         int posId = 0;
         int maxtam = GetTam(raf);
         boolean found = false;
-        TableInfo tb = new TableInfo();
-        if(maxtam >= SearchID){
+        if(maxtam > SearchID){
         try{
             raf.seek(0);
             String line = raf.readUTF();
-            System.out.println(line);
             while (line != null && found != true){
-                if(where == 0)
-                {
-                    posId = Integer.parseInt(line,16);
-                    if(posId >= SearchID)
-                    {   
-                        ponteiro = raf.getFilePointer();
-                        tb.DecompresString(line);
-                        found = true;
-                        System.out.println(tb.del);
-                    }
-                    where ++;
+                if(posId >= SearchID)
+                {   
+                    tb.DecompresString(line);
+                    found = true;
                 }
-                else{
-                    where=0;
-                }
+                posId++;
+                lastponteiro = ponteiro;
+                ponteiro = raf.getFilePointer();
                 line = raf.readUTF();
             }
             
-            if(posId != SearchID)
+            if(tb.ID != SearchID && tb.del != true)
             {
                 System.out.println("Nao achei o : " + SearchID);
                 ponteiro = -1;
             }
             else{
                 System.out.println("Achei o : " + SearchID);
-                tb.DecompresString(line);
                 tb.printAll();
             }
         }catch (IOException e) {
             e.printStackTrace();
         }
         }
-        return ponteiro;  
+        return lastponteiro;  
     }
 }
