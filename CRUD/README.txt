@@ -1,7 +1,7 @@
-Cria_Arquivo --> Lê o CSV
-Delete --> Deleta com base no ID
-Read --> Lê com base no ID
-Create --> Cria com os parâmetros enviados
+Cria_Arquivo --> Lê o CSV e cria o arquivo .db
+Delete --> Deleta o registro com base no ID
+Read --> Lê um registro com base no ID
+Create --> Cria com base nos parâmetros enviados -- Faz um Append no arquivo .db
 TableInfo --> Seta o vetor de bytes e os atributos que compõe a tabela
 Main --> Onde ocorre a chamada dessas classes com os parâmetros
 
