@@ -17,7 +17,7 @@ public class Main {
     	br = new BufferedReader(new FileReader("netflix_titles_2021.csv")); 
       
       raf = new RandomAccessFile("netflix.db", "rw");
-    	Crud.CreateArch(br, raf);
+      Crud.CreateArch(br, raf);
       Crud.Read(raf);
       System.out.println(Crud.GetTam(raf));
       
