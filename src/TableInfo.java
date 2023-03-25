@@ -1,3 +1,7 @@
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 public class TableInfo{
 	
@@ -170,140 +174,56 @@ public class TableInfo{
 			System.out.println(Duration);
 			
 		}
-		
+
 		//funcao para transformar todas variaveis em uma unica string
-		public String BigString(){
-			StringBuilder sb = new StringBuilder();
-			sb.append(Integer.toHexString(ID));
-			sb.append(" ");
-			sb.append("2");
+		public byte[] toBYte() throws IOException
+		{
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			DataOutputStream bytes = new DataOutputStream(baos);
+
 			if(del == false)
 			{
-			sb.append("  ");
+				bytes.writeChar(' ');
 			}
 			else
 			{
-			sb.append(" *");
+				bytes.writeChar('*');
 			}
-			sb.append(Integer.toHexString(Type.length()+1));
-			sb.append(" " + Type);
-			sb.append(Integer.toHexString(Title.length()+1));
-			sb.append(" " + Title);
-			sb.append(Integer.toHexString(Director.length()+1));
-			sb.append(" " + Director);
-			sb.append(Integer.toHexString(Cast.length()+1));
-			sb.append(" " + Cast);
-			sb.append(Integer.toHexString(Country.length()+1));
-			sb.append(" " + Country);
-			sb.append(Integer.toHexString(Date_Added.length()+1));
-			sb.append(" " + Date_Added);
-			sb.append(Integer.toHexString(Release_Year.length()+1));
-			sb.append(" " + Release_Year);
-			sb.append(Integer.toHexString(Rate.length()+1));
-			sb.append(" " + Rate);
-			sb.append(Integer.toHexString(Duration.length()+1));
-			sb.append(" " + Duration);
-			System.out.println(sb);
-			return sb.toString();
+			bytes.writeUTF(Integer.toHexString(ID));
+			bytes.writeUTF(Type);
+			bytes.writeUTF(Title);
+			bytes.writeUTF(Director);
+			bytes.writeUTF(Cast);
+			bytes.writeUTF(Country);
+			bytes.writeUTF(Date_Added);
+			bytes.writeUTF(Release_Year);
+			bytes.writeUTF(Rate);
+			bytes.writeUTF(Duration);
+			
+
+			return baos.toByteArray();
 		}
 		
-		public void DecompresSwitch(int x, StringBuilder value)
+		public long readall(RandomAccessFile raf) throws IOException
 		{
-			switch(x)
+			long pos = raf.readInt();
+			if(raf.readChar() == '*')
 			{
-				case 0:
-					setID(Integer.parseInt(value.toString(),16));
-					System.out.println(value);
-				break;
-				case 1:
-					if(value.toString() == "*")
-					{
-						Delete();
-					}
-					System.out.println(value);
-				break;
-				case 2:
-					setType(value.toString());
-					System.out.println(value);
-					break;
-				case 3:
-					setTitle(value.toString());
-					System.out.println(value);
-					break;
-				case 4:
-					setDirector(value.toString());
-					System.out.println(value);
-					break;
-				case 5:
-					setCast(value.toString());
-					System.out.println(value);
-				break;
-				case 6:
-					setCountry(value.toString());
-					System.out.println(value);
-					break;
-				case 7:
-					setDate_Added(value.toString());
-					System.out.println(value);
-					break;
-				case 8:
-					setRelease_Year(value.toString());
-					System.out.println(value);
-					break;
-				case 9:
-					setRate(value.toString());
-					System.out.println(value);
-					break;
-				case 10:
-					setDuration(value.toString());
-					System.out.println(value);
-					break;
-			}	
-		}
-
-		public void DecompresString(String textUTF)
-		{	
-			Integer pos = 0;
-			Integer nextposic = 0;
-			Integer oldpos = 0;
-			int where = 0;
-			StringBuilder value = new StringBuilder();
-			System.out.print(textUTF);
-
-			while(textUTF.charAt(pos) != ' ')
-			{
-				value.append(textUTF.charAt(pos));
-				pos++;
+				Delete();
 			}
-			DecompresSwitch(where, value);
-			pos++;
-			value = new StringBuilder();
-			while(pos < textUTF.length())
-			{	
-				if(pos < nextposic + oldpos && pos < textUTF.length()-1)
-				{
-					System.out.print(textUTF.charAt(pos));
-					value.append(textUTF.charAt(pos));
-				}
-				else{
-					if(pos < textUTF.length()-1){
-						StringBuilder temp = new StringBuilder();
-						while(textUTF.charAt(pos) != ' ')
-						{
-							temp.append(textUTF.charAt(pos));
-							pos++;
-						}
-						nextposic = Integer.parseInt(temp.toString(),16);
-						oldpos = pos;
-					}
-					if(where > 0){
-						DecompresSwitch(where, value);
-						value = new StringBuilder();
-					}
-					where++;
-				}
-				pos++;
-			}
+
+			setID(Integer.parseInt(raf.readUTF(),16));
+			setType(raf.readUTF());
+			setTitle(raf.readUTF());
+			setDirector(raf.readUTF());
+			setCast(raf.readUTF());
+			setCountry(raf.readUTF());
+			setDate_Added(raf.readUTF());
+			setRelease_Year(raf.readUTF());
+			setRate(raf.readUTF());
+			setDuration(raf.readUTF());
+				
+			return pos;
 		}
 
 		public String Dif(int takedif, String text)
@@ -321,7 +241,8 @@ public class TableInfo{
 			return append.toString();
 		}
 
-		public void update(int x, String text) {
+		public void update(int x, String text) 
+		{
 			//WORK
 			int takedif = 0;
 			switch(x)
