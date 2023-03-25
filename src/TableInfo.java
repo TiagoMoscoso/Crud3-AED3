@@ -20,6 +20,7 @@ public class TableInfo{
 
 		TableInfo(){
 			//construtor
+			ID = -1;
     		Type = "?";
 			del = false;
 			Title = "?";
@@ -206,26 +207,29 @@ public class TableInfo{
 		
 		public long readall(RandomAccessFile raf) throws IOException
 		{
+			
 			long pos = raf.readInt();
+			System.out.println("here :" + pos);
 			if(raf.readChar() == '*')
 			{
-				Delete();
+				this.Delete();
 			}
 
-			setID(Integer.parseInt(raf.readUTF(),16));
-			setType(raf.readUTF());
-			setTitle(raf.readUTF());
-			setDirector(raf.readUTF());
-			setCast(raf.readUTF());
-			setCountry(raf.readUTF());
-			setDate_Added(raf.readUTF());
-			setRelease_Year(raf.readUTF());
-			setRate(raf.readUTF());
-			setDuration(raf.readUTF());
+			this.setID(Integer.parseInt(raf.readUTF(),16));
+			this.setType(raf.readUTF());
+			this.setTitle(raf.readUTF());
+			this.setDirector(raf.readUTF());
+			this.setCast(raf.readUTF());
+			this.setCountry(raf.readUTF());
+			this.setDate_Added(raf.readUTF());
+			this.setRelease_Year(raf.readUTF());
+			this.setRate(raf.readUTF());
+			this.setDuration(raf.readUTF());
 				
 			return pos;
 		}
 
+		
 		public String Dif(int takedif, String text)
 		{
 			//WORK

@@ -32,7 +32,7 @@ public class Main {
       Crud.Search(raf,1);
       Crud.Delete(raf,1);
       Crud.Search(raf,1);
-
+      Order.Order();
     } catch (IOException e) {
 		e.printStackTrace();	// em caso de erro
 	}

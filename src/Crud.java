@@ -50,27 +50,19 @@ public class Crud extends TableInfo{
 
     public static void Read(RandomAccessFile raf) throws IOException{
         //WORK
-        int pos = 0;
-        int id = 0;
+        long pos = 0;
+        TableInfo tb = new TableInfo();
+        tb.setID(0);
         int max = GetTam(raf);
         raf.seek(0);
-        int inter;
+        long inter;
         System.out.println("Inicio");
-        while(id < max){
-            inter = raf.readInt();//tamanho registro
-            if(raf.readChar() != '*')//del
-            {   
-                id = Integer.parseInt(raf.readUTF(),16);
-                System.out.print(id + " ");//id
-                System.out.print(raf.readUTF() + " ");//type
-                System.out.print(raf.readUTF() + " ");//title
-                System.out.print(raf.readUTF() + " ");//director
-                System.out.print(raf.readUTF() + " ");//cast
-                System.out.print(raf.readUTF() + " ");//country
-                System.out.print(raf.readUTF() + " ");//date added
-                System.out.print(raf.readUTF() + " ");//release year
-                System.out.print(raf.readUTF() + " ");//rate
-                System.out.println(raf.readUTF());//duration
+        while(tb.ID < max){
+            inter =  tb.readall(raf);//tamanho registro
+
+            System.out.print(tb.ID + "----->"); System.out.println(inter);
+            if(tb.del == false){
+                tb.printAll();
             }
             pos = inter + pos +4;
             raf.seek(pos);
@@ -120,33 +112,20 @@ public class Crud extends TableInfo{
     public static long Search(RandomAccessFile raf, int SearchID) throws IOException{
         //WORK
         long pos = 0;
-        int id = 0;
+        TableInfo tb = new TableInfo();
+        tb.setID(0);
         int max = GetTam(raf);
         raf.seek(0);
-        int inter;
+        long inter;
         System.out.println("Inicio");
-        if(id <= max){
+        if(tb.ID <= max){
 
-            while(id <= SearchID){
-                inter = raf.readInt();//tamanho registro
-                System.out.print(id + "----->"); System.out.println(inter);
-                if(raf.readChar() != '*')//del // id
-                {   
-                    id = Integer.parseInt(raf.readUTF(),16);
-                    if(SearchID == id){
-                        System.out.print(id + " ");//id
-                        System.out.print(raf.readUTF() + " ");//type
-                        System.out.print(raf.readUTF() + " ");//title
-                        System.out.print(raf.readUTF() + " ");//director
-                        System.out.print(raf.readUTF() + " ");//cast
-                        System.out.print(raf.readUTF() + " ");//country
-                        System.out.print(raf.readUTF() + " ");//date added
-                        System.out.print(raf.readUTF() + " ");//release year
-                        System.out.print(raf.readUTF() + " ");//rate
-                        System.out.println(raf.readUTF());//duration
-                        System.out.print(id + "----->"); System.out.println(inter);
-                        return pos;
-                    }
+            while(tb.ID <= SearchID){
+                inter =  tb.readall(raf);//tamanho registro
+                System.out.print(tb.ID + "----->"); System.out.println(inter);
+                if(tb.del == false && SearchID == tb.ID){
+                    tb.printAll();
+                    return pos;
                 }
                 pos = inter + pos +4;
                 raf.seek(pos);
