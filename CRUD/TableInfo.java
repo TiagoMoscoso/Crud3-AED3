@@ -1,8 +1,7 @@
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 
 public class TableInfo{
 	
@@ -30,7 +29,7 @@ public class TableInfo{
         Rate = "?";
         Duration = "?";
     }
-    //Funcoes para definir variaveis
+    //Métodos para definir variaveis
     /////////////////////////////////////////////////////////////////////////
     public void setID(String NewID){
         if(NewID != " " && NewID != "")
@@ -107,7 +106,7 @@ public class TableInfo{
     }
     /////////////////////////////////////////////////////////////////////////
     
-    //funcao para definir todos as variaveis por array
+    //Método para definir todos as variaveis por array
     public void setALL(String allstrings[])
     {
         for(int x = 0; x < allstrings.length; x++)
@@ -150,47 +149,8 @@ public class TableInfo{
         }
     }
     
-    
-    //funcao para printar no console
-    public void printAll(){
-        System.out.print(ID);
-        System.out.print(";");
-        System.out.print(Type);
-        System.out.print(";");
-        System.out.print(Director);
-        System.out.print(";");
-        System.out.print(Cast);
-        System.out.print(";");
-        System.out.print(Country);
-        System.out.print(";");
-        System.out.print(Date_Added);
-        System.out.print(";");
-        System.out.print(Release_Year);
-        System.out.print(";");
-        System.out.print(Rate);
-        System.out.print(";");
-        System.out.println(Duration);
-        
-    }
-    
-    //funcao para transformar todas variaveis em uma unica string
-    public String BigString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append(ID);
-        sb.append(" ");
-        sb.append(Type);
-        sb.append(Director);
-        sb.append(Cast);
-        sb.append(Country);
-        sb.append(Date_Added);
-        sb.append(Release_Year);
-        sb.append(Rate);
-        sb.append(Duration);
-        System.out.println(sb);
-        return sb.toString();
-    }
 
-    /*Função que cria um vetor de bytes para escrever no arquivo*/ 
+    /*Método que cria um vetor de bytes para escrever no arquivo*/ 
     public byte[] converte_bytearray() throws IOException{
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
@@ -207,25 +167,32 @@ public class TableInfo{
         dos.writeUTF(Duration);
         dos.writeUTF(";");
         return baos.toByteArray();
+    }
+
+    /*Método que faz a leitura de um registro, setando os valores dos atributos */
+    public void readall(RandomAccessFile raf) throws IOException{
+        
+        raf.readInt(); //lê indicador de tamanho
+        Lapide = raf.readUTF();//lê lápide
+        setID(raf.readInt());
+        setType(raf.readUTF());
+        setTitle(raf.readUTF());
+        setDirector(raf.readUTF());
+        setCast(raf.readUTF());
+        setCountry(raf.readUTF());
+        setDate_Added(raf.readUTF());
+        setRelease_Year(raf.readUTF());
+        setRate(raf.readUTF());
+        setDuration(raf.readUTF());
+        raf.readUTF();
+        
 
     }
 
-    public void leitura_byte(byte[] bt) throws IOException{
-        ByteArrayInputStream binpt = new ByteArrayInputStream(bt);
-        DataInputStream dis = new DataInputStream(binpt);
-        this.Lapide = dis.readUTF();
-        this.ID = dis.readInt();
-        this.Type = dis.readUTF();
-        this.Title = dis.readUTF();
-        this.Director = dis.readUTF();
-        this.Cast = dis.readUTF();
-        this.Country = dis.readUTF();
-        this.Date_Added = dis.readUTF();
-        this.Release_Year = dis.readUTF();
-        this.Rate = dis.readUTF();
-        this.Duration = dis.readUTF();
-        dis.readUTF();//Lê o ;
+    public String[] array_registros(){
+        String x = Integer.toString(ID);
+        String[] aux = {x,Type,Title,Director,Cast,Country,Date_Added,Release_Year,Rate,Duration};
+        return aux;
     }
-    
 
 }

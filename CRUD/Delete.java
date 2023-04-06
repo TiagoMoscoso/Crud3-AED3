@@ -2,6 +2,10 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class Delete extends TableInfo{
+
+    /*Construtor que instancia o RAF que irá efetuar a procura do ID, bem como 
+      preencher a lápide e Mostrar o Registro que foi apagado
+    */
     Delete(int id) throws IOException{
         RandomAccessFile arq = new RandomAccessFile("netflix.db", "rw");
         arq.seek(0);
@@ -35,7 +39,7 @@ public class Delete extends TableInfo{
                         break;
                     }
                 }
-
+                
                 ponteiro_atual = arq.getFilePointer()-7;
                 arq.seek(ponteiro_atual);
                 arq.seek(ponteiro_atual+tamanho_registro);

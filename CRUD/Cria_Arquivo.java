@@ -20,14 +20,20 @@ public class Cria_Arquivo{
 	}
 
 
+	/*Método publico que sera chamado no Main, para poder ler os arquivos da 
+	 * Base de dados e criar o arquivo .db, com base nas informações extraidas
+	 */
   	public void cria_db() throws FileNotFoundException {
-		
 		
 		String linha = "";
 		byte[] vet_byte;
 		TableInfo tb = new TableInfo();
 		
 		try {
+			/*BufferedReader->Lê o Csv 
+			 *FileOutputStream->Auxiliar para criar o DataOutputStream
+			  DataOutputStream->Escrita no arquivo (MODO DE CRIACAO)
+			  RandomAcessFile-> seta o ultimo ID no cabecalho*/
 
 			br = new BufferedReader(new FileReader("netflix_titles_2021.csv")); 
 			fil = new FileOutputStream("netflix.db");
@@ -36,19 +42,16 @@ public class Cria_Arquivo{
 
 			dos.writeInt(0);
 			br.readLine();
-			int cont=1;
 			
-			while ((linha = br.readLine()) != null && cont<=2){
+			while ((linha = br.readLine()) != null){
 				tb.setALL(linha.split(";"));
-
 				vet_byte = tb.converte_bytearray();
 				dos.writeInt(vet_byte.length);
 				dos.write(vet_byte);
-				
-				rnd.seek(0);
-				rnd.writeInt(cont);
-				cont++;			
+						
 			}
+			rnd.seek(0);
+			rnd.writeInt(tb.ID);
 
 			br.close();
 			fil.close();

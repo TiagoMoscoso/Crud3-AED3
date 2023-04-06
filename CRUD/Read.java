@@ -3,6 +3,10 @@ import java.io.RandomAccessFile;
 
 public class Read extends TableInfo{
     RandomAccessFile arq;
+
+    /*Construtor irá instanciar o atributo do RandomAcessFile que irá percorrer 
+     * o arquivo atrás do ID que o usuário entrou
+     */
     Read(int id) throws IOException{
         
         arq = new RandomAccessFile("netflix.db", "r");
@@ -10,9 +14,11 @@ public class Read extends TableInfo{
         arq.readInt();//Pula a leitura do cabecalho
         leitura(id);
         
-
     }
 
+    /*Procedimento que irá Procurar o ID, pulando de registro em registro, com base
+     * em seu tamanho
+     */
     private void leitura(int id)throws IOException{
         while(true){
             
@@ -45,7 +51,7 @@ public class Read extends TableInfo{
                 }
                 ponteiro_atual = arq.getFilePointer()-7;
                 
-                arq.seek(ponteiro_atual);//reseta a posicao do ponteiro para o primeiro indice do registro
+                arq.seek(ponteiro_atual);//reseta a posicao do ponteiro para o primeiro indice do registro(logo apos o indicador de tamanho)
                 arq.seek(ponteiro_atual+tamanho_registro);//coloca o ponteiro exatamente no indicador de tamanho do proximo registro
 
             }catch(Exception EOFException){
