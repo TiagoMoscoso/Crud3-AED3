@@ -18,7 +18,7 @@ public class TableInfo{
     String 	Duration= new String();
     
 
-    TableInfo(){
+    public TableInfo(){
         //construtor
         Title = "?";
         Type = "?";
@@ -171,8 +171,8 @@ public class TableInfo{
 
     /*Método que faz a leitura de um registro, setando os valores dos atributos */
     public void readall(RandomAccessFile raf) throws IOException{
-        
-        raf.readInt(); //lê indicador de tamanho
+        long z = raf.getFilePointer();
+        int tamanho = raf.readInt(); //lê indicador de tamanho
         Lapide = raf.readUTF();//lê lápide
         setID(raf.readInt());
         setType(raf.readUTF());
@@ -186,6 +186,8 @@ public class TableInfo{
         setDuration(raf.readUTF());
         raf.readUTF();
         
+        raf.seek(z);
+        raf.seek(raf.getFilePointer()+4+tamanho);
 
     }
 

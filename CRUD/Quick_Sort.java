@@ -3,7 +3,7 @@
 public class Quick_Sort {
     public String[][] parametros;
     
-    Quick_Sort(String[][] param, int inicio, int fim){
+    public Quick_Sort(String[][] param, int inicio, int fim){
         parametros = param;
         quick_sort(inicio, fim);
     }

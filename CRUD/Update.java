@@ -13,8 +13,7 @@ public class Update extends TableInfo{
     /*Construtor que irá fazer a procura do registro que tem o ID que o usuario quer mudar
      *Os novos campos do registro serão armazenados no atributo NOVO_REGISTRO, em forma de vetor de bytes 
      */
-    Update(int id, String tipo, String titulo, String diretor, String elenco, String pais,
-    String ano_add, String ano_lanc, String avaliacao, String duracao) throws IOException{
+    public Update(String[] vet_entradas, int id) throws IOException{
         arq = new RandomAccessFile("netflix.db", "rw");
         arq.seek(0);
         arq.readInt();
@@ -30,7 +29,6 @@ public class Update extends TableInfo{
                 if (lapide.compareTo("*")!=0){
                     if (leitor_id==id){
                         //CHAMADA O METODO PARA ATUALIZAR O REGISTRO
-                        String[] vet_entradas = {String.valueOf(id), tipo,titulo,diretor, elenco, pais, ano_add, ano_lanc, avaliacao, duracao};
                         setALL(vet_entradas);
                         atualiza_registro(tamanho_registro, leitor_id);
                         break;

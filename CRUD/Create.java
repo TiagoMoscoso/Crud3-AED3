@@ -11,8 +11,7 @@ public class Create extends TableInfo{
      * através do DataOutputStream, usando o modo APPEND
      */
     
-    Create(String tipo, String titulo, String diretor, String elenco, String pais,
-    String ano_add, String ano_lanc, String avaliacao, String duracao) throws FileNotFoundException{
+    public Create(String[] vet_entradas) throws FileNotFoundException{
         
         RandomAccessFile leitor = new RandomAccessFile("netflix.db", "rw");
         
@@ -22,7 +21,10 @@ public class Create extends TableInfo{
         
 
         try{
-            
+            if(leitor.length() == 0){
+                leitor.seek(0);
+                leitor.writeInt(0);
+            }
             byte[] vet_byte;
             leitor.seek(0);
             
@@ -30,18 +32,20 @@ public class Create extends TableInfo{
             
             leitor.seek(0);
             leitor.writeInt(id_atual);//Atualiza no cabecalho o ID
-
-            String id_str = String.valueOf(id_atual);
+            String x = Integer.toString(id_atual);
+            String[] aux = new String[10];
+            aux[0] = x;
+            for(int i=1;i<10;i++){
+                aux[i] = vet_entradas[i-1];
+            }
             
-            String[] vet_entradas = {id_str, tipo,titulo,diretor, elenco, pais, ano_add, ano_lanc, avaliacao, duracao};
-            
-            setALL(vet_entradas);
+            setALL(aux);
             vet_byte = converte_bytearray();//inserir os elementos dentro do vetor de bytes, como bytes
             dout.writeInt(vet_byte.length);//Escreve o tamanho do registro
             dout.write(vet_byte);//Escreve todo o registro, com indicador de tamanho
-           
             dout.close();
             leitor.close();
+            System.out.println("Arquivo criado com sucesso");
             
         }catch(Exception e){
             e.printStackTrace();

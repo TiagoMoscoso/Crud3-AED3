@@ -1,5 +1,7 @@
 import java.io.RandomAccessFile;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Ordenacao_Externa{
@@ -22,14 +24,15 @@ public class Ordenacao_Externa{
     private int contador_arq2;
     private int contador_arq3;
     private int contador_arq4;
+    private int cabecalho;
     /*O atributo INDEX é a quantidade de registros que iremos trabalhar incialmente, como pedida no trabalho0 ->10 */
     private int INDEX=10;
 
     
-    Ordenacao_Externa() throws IOException{
+    public Ordenacao_Externa() throws IOException{
 
         raf.seek(0);
-        raf.readInt();//pula o cabecalho
+        cabecalho = raf.readInt();//pula o cabecalho
         TableInfo tb = new TableInfo();
         String[][] array_registro = new String[INDEX][];
         while (true){
@@ -143,6 +146,7 @@ public class Ordenacao_Externa{
                 
             if (arq3.length() == 0 || arq4.length() == 0){
                 System.out.println("Ordenado!");
+                transcreve_arq(arq3);
             }
             else{
                 arq3.seek(0);
@@ -197,6 +201,7 @@ public class Ordenacao_Externa{
             delete_arquivo(-1);
             if(arq1.length() == 0 || arq2.length() == 0){
                 System.out.println("Ordenado!");
+                transcreve_arq(arq1);
             }
             else{
                 arq1.seek(0);
@@ -393,6 +398,32 @@ public class Ordenacao_Externa{
         }
     }
 
+    /*Método para reescrever o arquivo original, com base no caminho resultante */
+    private void transcreve_arq(RandomAccessFile raf) throws IOException{
+        FileOutputStream fil = new FileOutputStream("netflix.db");
+        DataOutputStream dos = new DataOutputStream(fil);
+        TableInfo tb = new TableInfo();
+        byte[] registro;
+        try{
+            dos.writeInt(cabecalho);
+            raf.seek(0);
+            long ponteiro = raf.getFilePointer();
+            while(raf.readLine() != null){
+                raf.seek(ponteiro);
+                tb.readall(raf);
+                registro = tb.converte_bytearray();
+                dos.writeInt(registro.length);
+                dos.write(registro);
+                ponteiro = raf.getFilePointer();
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        fil.close();
+        dos.close();
+        raf.close();
+    }
 }
 
     

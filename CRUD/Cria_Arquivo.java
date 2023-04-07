@@ -7,24 +7,14 @@ import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 
 public class Cria_Arquivo{
-	private BufferedReader br;
-	private FileOutputStream fil;
-	private DataOutputStream dos;
-	private RandomAccessFile rnd;
-
-	Cria_Arquivo(){
-		br = null;
-		fil = null;
-		dos = null;
-		rnd = null;
-	}
-
-
-	/*Método publico que sera chamado no Main, para poder ler os arquivos da 
+	/*Método publico para poder ler os arquivos da 
 	 * Base de dados e criar o arquivo .db, com base nas informações extraidas
 	 */
-  	public void cria_db() throws FileNotFoundException {
-		
+  	public static void cria_db() throws FileNotFoundException {
+		BufferedReader br;
+		FileOutputStream fil;
+		DataOutputStream dos;
+		RandomAccessFile rnd;
 		String linha = "";
 		byte[] vet_byte;
 		TableInfo tb = new TableInfo();
