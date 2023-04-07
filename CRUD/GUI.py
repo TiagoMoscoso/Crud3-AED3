@@ -6,7 +6,6 @@ import subprocess
 
 COR_DE_FUNDO = "#DDFFBB"
 os.path.abspath(os.path.dirname(__file__))
-subprocess.call('javac -source 1.8 -target 1.8 Main.java')
 subprocess.call('javac -source 1.8 -target 1.8 Create.java')
 subprocess.call('javac -source 1.8 -target 1.8 Cria_Arquivo.java')
 subprocess.call('javac -source 1.8 -target 1.8 Delete.java')
