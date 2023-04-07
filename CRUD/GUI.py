@@ -1,26 +1,16 @@
 import tkinter
 from tkinter import ttk
 from tkinter import messagebox
-import os
-import subprocess
+import jpype
+import Scriptbuild
 
 COR_DE_FUNDO = "#DDFFBB"
-os.path.abspath(os.path.dirname(__file__))
-subprocess.call('javac -source 1.8 -target 1.8 Create.java')
-subprocess.call('javac -source 1.8 -target 1.8 Cria_Arquivo.java')
-subprocess.call('javac -source 1.8 -target 1.8 Delete.java')
-subprocess.call('javac -source 1.8 -target 1.8 Ordenacao_Externa.java')
-subprocess.call('javac -source 1.8 -target 1.8 Quick_Sort.java')
-subprocess.call('javac -source 1.8 -target 1.8 Read.java')
-subprocess.call('javac -source 1.8 -target 1.8 TableInfo.java')
-subprocess.call('javac -source 1.8 -target 1.8 Update.java')
 
-import jpype
 
 # Inicia a JVM do Java
 jpype.startJVM()
 
-
+Scriptbuild.build()
 
 class GUI:
     def __init__(self):
@@ -98,7 +88,7 @@ class GUI:
         tela = tkinter.Tk()
         tela.title("Create")
         tela.config(padx=5, pady=9, bg=COR_DE_FUNDO)
-        tela.geometry("920x600")
+        tela.geometry("650x400")
         
         label_titulo = tkinter.Label(text="Create",font=("Arial", 25, "bold"), fg="#0EA293", bg=COR_DE_FUNDO)
         label_titulo.grid(row=0, column=0, pady=5, columnspan=2)
@@ -190,7 +180,7 @@ class GUI:
         tela = tkinter.Tk()
         tela.title("Read")
         tela.config(padx=5, pady=9, bg=COR_DE_FUNDO)
-        tela.geometry("920x800")
+        tela.geometry("650x400")
         
         label_read = tkinter.Label(text="Read",font=("Arial", 15, "bold"), fg="#0EA293", bg=COR_DE_FUNDO)
         label_read.place(x=400, y=10)
@@ -218,7 +208,7 @@ class GUI:
         tela = tkinter.Tk()
         tela.title("Update")
         tela.config(padx=5, pady=9, bg=COR_DE_FUNDO)
-        tela.geometry("920x800")
+        tela.geometry("650x400")
         
         label_titulo = tkinter.Label(text="Update",font=("Arial", 25, "bold"), fg="#0EA293", bg=COR_DE_FUNDO)
         label_titulo.grid(row=0, column=0, pady=5, columnspan=2)
@@ -308,7 +298,7 @@ class GUI:
         tela = tkinter.Tk()
         tela.title("Create")
         tela.config(padx=5, pady=9, bg=COR_DE_FUNDO)
-        tela.geometry("920x800")
+        tela.geometry("650x400")
         
         label_delete = tkinter.Label(text="Delete",font=("Arial", 25, "bold"), fg="#0EA293", bg=COR_DE_FUNDO)
         label_delete.place(x=390, y=10)
