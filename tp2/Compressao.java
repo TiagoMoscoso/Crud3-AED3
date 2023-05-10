@@ -12,10 +12,11 @@ public class Compressao {
     public HashMap<String, Integer> dicionario = new HashMap<String, Integer>();
 
     public Compressao() throws IOException {
-        id = 0;
+        id = 1;
     }
 
     public void criaDicionario() {
+        dicionario.put(String.valueOf((char) 28),0);
         for (int i = 32; i < 127; i++) {
             String aux = String.valueOf((char) i);
             dicionario.put(aux, id);
@@ -62,6 +63,7 @@ public class Compressao {
 
     }
 
+    /*Método que particiona um número inteiro, em um vetor de char */
     private char[] particiona_int(int num) {
         String auxiliar = Integer.toString(num);
         char[] vetsimbolo = auxiliar.toCharArray();
@@ -90,6 +92,7 @@ public class Compressao {
     private char[] verificaSimbolo(String verifica, RandomAccessFile bd, int leUTFouInt)
             throws IOException {
         String auxiliar = verifica;
+        auxiliar += String.valueOf((char)28);
         if (leUTFouInt == 1) {// Lê int
             int leitura = bd.readInt();
 
