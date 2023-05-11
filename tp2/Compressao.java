@@ -16,8 +16,8 @@ public class Compressao {
     }
 
     public void criaDicionario() {
-        
-        dicionario.put(String.valueOf( ( (char) 28 ) ), 0);
+
+        dicionario.put(String.valueOf((char) 28),0);
 
         for (int i = 32; i < 127; i++) {
             String aux = String.valueOf((char) i);
