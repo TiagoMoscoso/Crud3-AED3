@@ -65,6 +65,7 @@ public class Compressao {
 
     }
 
+    /*Método que particiona um número inteiro, em um vetor de char */
     private char[] particiona_int(int num) {
         String auxiliar = Integer.toString(num);
         char[] vetsimbolo = auxiliar.toCharArray();
@@ -114,8 +115,12 @@ public class Compressao {
     private char[] verificaSimbolo(String verifica, RandomAccessFile bd, int leUTFouInt)
             throws IOException {
         String auxiliar = verifica;
+<<<<<<< HEAD
         auxiliar += String.valueOf((char) 28);
 
+=======
+        auxiliar += String.valueOf((char)28);
+>>>>>>> f202e5d7fc1a7768d62cb90f5a970c234c1b8e83
         if (leUTFouInt == 1) {// Lê int
             int leitura = bd.readInt();
 
