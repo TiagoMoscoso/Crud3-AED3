@@ -2,8 +2,8 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.FileOutputStream;
 import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.io.File;
 
 public class Compressao {
     // private RandomAccessFile rnd = new RandomAccessFile("dicionario.db", "rw");
@@ -12,10 +12,13 @@ public class Compressao {
     public HashMap<String, Integer> dicionario = new HashMap<String, Integer>();
 
     public Compressao() throws IOException {
-        id = 0;
+        id = 1;
     }
 
     public void criaDicionario() {
+        
+        dicionario.put(String.valueOf( ( (char) 28 ) ), 0);
+
         for (int i = 32; i < 127; i++) {
             String aux = String.valueOf((char) i);
             dicionario.put(aux, id);
@@ -69,10 +72,31 @@ public class Compressao {
 
     }
 
+    public void test() throws IOException
+    {
+        try {
+            RandomAccessFile codi = new RandomAccessFile("codificacao.db", "r");
+            while(true)
+            {
+                int reader = codi.readInt();
+                for(String chave : dicionario.keySet())
+                {
+                    if(dicionario.get(chave) == reader)
+                        System.out.println("id :"+ reader + "conteudo :"+ chave);
+                }
+                
+            }
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
     private String EscreveCodificacaoEdicionario(char[] vetsimbolo, DataOutputStream codf) throws IOException {
         String aux = "";
         int cod_escrita = dicionario.get(String.valueOf(vetsimbolo[0]));
-        for (int i = 0; i < vetsimbolo.length; i++) {
+        for (int i = 0; i < vetsimbolo.length; i++) 
+        {
             aux += String.valueOf(vetsimbolo[i]);
             if (dicionario.get(aux) == null) {
                 dicionario.put(aux, id);
@@ -90,17 +114,18 @@ public class Compressao {
     private char[] verificaSimbolo(String verifica, RandomAccessFile bd, int leUTFouInt)
             throws IOException {
         String auxiliar = verifica;
+        auxiliar += String.valueOf((char) 28);
+
         if (leUTFouInt == 1) {// Lê int
             int leitura = bd.readInt();
 
             char[] arraychar = particiona_int(leitura);
             char[] arrayFinal = new char[arraychar.length + auxiliar.length()];
-
+            
             return criaVetArray(auxiliar, arrayFinal, arraychar);
 
         } else {// lê UTF
             String leitura = bd.readUTF();
-
             char[] arraychar = leitura.toCharArray();
             char[] arrayFinal = new char[arraychar.length + auxiliar.length()];
 
@@ -120,7 +145,7 @@ public class Compressao {
         return arrayFinal;
     }
 
-    public void ganho() {
+    /*public void ganho() {
         File arqcodif = new File("codificacao.db");
         File arqoriginal = new File("netflix.db");
         if (arqcodif.exists() && arqoriginal.exists()) {
@@ -130,6 +155,11 @@ public class Compressao {
             System.out.println("Tamanho do arquivo comprimido: " + tamanhoarqcom);
             System.out.println("Arquivo original é: " + (float) tamanhoarqo / (float) tamanhoarqcom + " vezes maior");
         }
+    }*/
+
+    public HashMap<String, Integer> retornarHashMap() 
+    {
+        return dicionario;
     }
 
 }

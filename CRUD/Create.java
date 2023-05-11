@@ -1,4 +1,4 @@
-import  java.io.FileOutputStream;
+import java.io.FileOutputStream;
 import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
@@ -32,6 +32,7 @@ public class Create extends TableInfo{
             
             leitor.seek(0);
             leitor.writeInt(id_atual);//Atualiza no cabecalho o ID
+            
             String x = Integer.toString(id_atual);
             String[] aux = new String[10];
             aux[0] = x;
@@ -39,8 +40,10 @@ public class Create extends TableInfo{
                 aux[i] = vet_entradas[i-1];
             }
             
+            
             setALL(aux);
-            vet_byte = converte_bytearray();//inserir os elementos dentro do vetor de bytes, como bytes
+            vet_byte = 
+            converte_bytearray();//inserir os elementos dentro do vetor de bytes, como bytes
             dout.writeInt(vet_byte.length);//Escreve o tamanho do registro
             dout.write(vet_byte);//Escreve todo o registro, com indicador de tamanho
             dout.close();

@@ -5,7 +5,7 @@ import subprocess
 
 class build():
     os.path.abspath(os.path.dirname(__file__))
-    print("building ....")
+    
     subprocess.call('javac -source 1.8 -target 1.8 Create.java')
     subprocess.call('javac -source 1.8 -target 1.8 Cria_Arquivo.java')
     subprocess.call('javac -source 1.8 -target 1.8 Delete.java')
@@ -14,5 +14,3 @@ class build():
     subprocess.call('javac -source 1.8 -target 1.8 Read.java')
     subprocess.call('javac -source 1.8 -target 1.8 TableInfo.java')
     subprocess.call('javac -source 1.8 -target 1.8 Update.java')
-
-    print("builded")

@@ -10,7 +10,8 @@ public class arquivo_indice {
         DataOutputStream dos = new DataOutputStream(fil);
         try {
             rnd.readInt();
-            while (true) {
+            while (true) 
+            {
                 long ponteiro_atual = rnd.getFilePointer();
                 int tamanho = rnd.readInt();// lê indicador de tamanho;
                 rnd.readUTF();// lê lápide
