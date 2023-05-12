@@ -34,6 +34,7 @@ public class Cria_Arquivo{
 			br.readLine();
 			
 			while ((linha = br.readLine()) != null){
+				linha = linha.replaceAll(";;",";?;");
 				tb.setALL(linha.split(";"));
 				vet_byte = tb.converte_bytearray();
 				dos.writeInt(vet_byte.length);

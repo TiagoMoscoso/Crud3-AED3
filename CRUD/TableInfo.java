@@ -104,6 +104,13 @@ public class TableInfo{
             this.Title = Title;
 
     }
+
+    public void setLapide(String NewLapide){
+        if(NewLapide!= " " && NewLapide!= "")
+            this.Lapide = " ";
+        else
+            this.Lapide = "*";
+    }
     /////////////////////////////////////////////////////////////////////////
     
     //Método para definir todos as variaveis por array
