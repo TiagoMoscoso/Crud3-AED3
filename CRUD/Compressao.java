@@ -10,7 +10,6 @@ public class Compressao {
     // private RandomAccessFile rnd = new RandomAccessFile("dicionario.db", "rw");
     private int id;
     private int TAMANHODIC = 65535;
-    private int contador=0;
     public HashMap<String, Integer> dicionario = new HashMap<String, Integer>();
 
     public Compressao() throws IOException {
@@ -79,9 +78,8 @@ public class Compressao {
         for (int i = 0; i < vetsimbolo.length; i++) {
             aux += String.valueOf(vetsimbolo[i]);
             if (dicionario.get(aux) == null) {
-                if (contador==TAMANHODIC){
+                if (id==TAMANHODIC){
                     dicionario.clear();
-                    contador = 0;
                     id = 0;
                     criaDicionario();
                 }
@@ -92,7 +90,6 @@ public class Compressao {
                 codf.write(cod_escrita/256);
                 codf.write(cod_escrita);
 
-                contador++;
                 i--;
             } else {
                 cod_escrita = dicionario.get(String.valueOf(aux));
