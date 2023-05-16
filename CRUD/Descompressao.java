@@ -152,13 +152,15 @@ public class Descompressao extends TableInfo
             int reader = 1;
             while(reader > -1)
             {
-                reader = codi.readInt();
+                
+                reader = (codi.read()*256) + codi.read();
                 laString = descompressao(reader, laString, deco);
             }
 
         }
-        catch(Exception eofException)
+        catch(Exception e)
         {
+            e.printStackTrace();
             System.out.println("Descompressao finalizada");
         }
 
