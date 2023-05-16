@@ -10,7 +10,6 @@ public class Compressao {
     // private RandomAccessFile rnd = new RandomAccessFile("dicionario.db", "rw");
     private int id;
     private int TAMANHODIC = 65535;
-
     public HashMap<String, Integer> dicionario = new HashMap<String, Integer>();
 
     public Compressao() throws IOException {
