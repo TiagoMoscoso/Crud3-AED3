@@ -36,11 +36,12 @@ public class Cria_Arquivo {
             dos.writeInt(0);
             br.readLine();
             while ((linha = br.readLine()) != null) 
-			{
-                tb.setALL(linha.split(";"));
+			{   
+                tb.setALL(linha.split(";",0));
                 vet_byte = tb.converte_bytearray();
                 dos.writeInt(vet_byte.length);
                 dos.write(vet_byte);
+                tb = new TableInfo();
             }
             rnd.seek(0);
             rnd.writeInt(tb.ID);

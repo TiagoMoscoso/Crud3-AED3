@@ -13,7 +13,7 @@ public class TableInfo{
     String  Cast= new String(); 
     String  Country= new String(); 
     String  Date_Added= new String(); 
-    String  Release_Year; 
+    String  Release_Year =  new String(); 
     String  Rate= new String(); 
     String 	Duration= new String();
     
@@ -24,6 +24,7 @@ public class TableInfo{
         Type = "?";
         Director = "?";
         Cast = "?";
+        Country="?";
         Date_Added = "?";
         Release_Year = "?";
         Rate = "?";
@@ -42,71 +43,71 @@ public class TableInfo{
     
     
     public void setType(String NewType){
-        if(NewType != " " && NewType != "")
+        if(NewType.compareTo(" ") != 0  && NewType.compareTo("") != 0) 
             this.Type = NewType;
         else
             this.Type = "?";
     }
+
+    public void setTitle(String Title){
+        if (Title.compareTo(" ") != 0 && Title.compareTo("") != 0)
+            this.Title = Title;
+        else
+            this.Title = "?";
+
+    }
     
     public void setDirector(String NewDirector){
-        if(NewDirector != " " && NewDirector != "")
+        if(NewDirector.compareTo(" ") != 0  && NewDirector.compareTo("") != 0)
             this.Director = NewDirector;
         else
             this.Director = "?";
     }
     
     public void setCast(String NewCast){
-        if(NewCast != " " && NewCast != "")
+        if(NewCast.compareTo(" ") != 0  && NewCast.compareTo("") != 0)
             this.Cast = NewCast;
         else
             this.Cast = "?";
     }
     
     public void setCountry(String NewCountry){
-        if(NewCountry != " " && NewCountry != "")
+        if(NewCountry.compareTo(" ") != 0  && NewCountry.compareTo("") != 0)
             this.Country = NewCountry;
         else
             this.Country = "?";
     }
     
     public void setDate_Added(String NewDate_Added){
-        if(NewDate_Added != " " && NewDate_Added != "")
+        if(NewDate_Added.compareTo(" ") != 0  && NewDate_Added.compareTo("") != 0)
             this.Date_Added = NewDate_Added;
         else
             this.Date_Added = "?";
     }
     
     public void setRelease_Year(String NewRelease_Year){
-        if(NewRelease_Year!= " " && NewRelease_Year != "")
+        if(NewRelease_Year.compareTo(" ") != 0  && NewRelease_Year.compareTo("") != 0)
             this.Release_Year =  NewRelease_Year;
         else
             this.Release_Year = "?";
     }
     
     public void setRate(String NewRate){
-        if(NewRate!= " " && NewRate!= "")
+        if(NewRate.compareTo(" ") != 0  && NewRate.compareTo("") != 0)
             this.Rate = NewRate;
         else
             this.Rate = "?";
     }
     
     public void setDuration(String NewDuration){
-        if(NewDuration!= " " && NewDuration!= "")
+        if(NewDuration.compareTo(" ") != 0  && NewDuration.compareTo("") != 0)
             this.Duration = NewDuration;
         else
             this.Duration = "?";
     }
 
-    public void setTitle(String Title){
-        if (Title!= " " && Title != "")
-            this.Title = Title;
-        else
-            this.Title = Title;
-
-    }
-
     public void setLapide(String NewLapide){
-        if(NewLapide!= " " && NewLapide!= "")
+        if(NewLapide.compareTo(" ") == 0)
             this.Lapide = " ";
         else
             this.Lapide = "*";

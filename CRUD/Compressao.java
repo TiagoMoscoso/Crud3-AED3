@@ -5,11 +5,11 @@ import java.io.DataOutputStream;
 import java.util.HashMap;
 import java.io.File;
 
-
 public class Compressao {
     // private RandomAccessFile rnd = new RandomAccessFile("dicionario.db", "rw");
     private int id;
     private int TAMANHODIC = 65535;
+    boolean restored = false;
     public HashMap<String, Integer> dicionario = new HashMap<String, Integer>();
 
     public Compressao() throws IOException {
@@ -17,7 +17,7 @@ public class Compressao {
     }
 
     public void criaDicionario() {
-        dicionario.put(String.valueOf((char) 28),0);
+        dicionario.put(String.valueOf((char) 28), 0);
         for (int i = 32; i < 127; i++) {
             String aux = String.valueOf((char) i);
             dicionario.put(aux, id);
@@ -28,7 +28,7 @@ public class Compressao {
             dicionario.put(aux, id);
             id++;
         }
-        
+
     }
 
     public void iniciaCompressao() throws IOException {
@@ -65,7 +65,7 @@ public class Compressao {
 
     }
 
-    /*Método que particiona um número inteiro, em um vetor de char */
+    /* Método que particiona um número inteiro, em um vetor de char */
     private char[] particiona_int(int num) {
         String auxiliar = Integer.toString(num);
         char[] vetsimbolo = auxiliar.toCharArray();
@@ -77,19 +77,25 @@ public class Compressao {
         String aux = "";
         int cod_escrita = dicionario.get(String.valueOf(vetsimbolo[0]));
         for (int i = 0; i < vetsimbolo.length; i++) {
+            if (dicionario.get(String.valueOf(vetsimbolo[i])) == null) {
+                vetsimbolo[i] = '?';
+            }
             aux += String.valueOf(vetsimbolo[i]);
             if (dicionario.get(aux) == null) {
-                if (id==TAMANHODIC){
+                if (id == TAMANHODIC) {
                     dicionario.clear();
-                    id = 0;
+                    id = 1;
+                    restored = true;
                     criaDicionario();
                 }
                 dicionario.put(aux, id);
-                id++;
+
                 aux = "";
-                
-                codf.write(cod_escrita/256);
+
+                codf.write(cod_escrita / 256);
                 codf.write(cod_escrita);
+
+                id++;
                 i--;
             } else {
                 cod_escrita = dicionario.get(String.valueOf(aux));
@@ -101,7 +107,7 @@ public class Compressao {
     private char[] verificaSimbolo(String verifica, RandomAccessFile bd, int leUTFouInt)
             throws IOException {
         String auxiliar = verifica;
-        auxiliar += String.valueOf((char)28);
+        auxiliar += String.valueOf((char) 28);
         if (leUTFouInt == 1) {// Lê int
             int leitura = bd.readInt();
 

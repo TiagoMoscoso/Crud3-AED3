@@ -6,12 +6,10 @@ public class Main {
         //Cria_Arquivo.cria_db();
         System.setProperty("file.encoding", Charset.forName("UTF-8").name());
         Compressao x = new Compressao();
-        x.criaDicionario();
+        /*x.criaDicionario();
         x.iniciaCompressao();
-        x.ganho();
-        x = new Compressao();
+        x.ganho();*/
         Descompressao y = new Descompressao();
-        y.criaDicionario();
         y.iniciaDescompressao();
     }
 }
