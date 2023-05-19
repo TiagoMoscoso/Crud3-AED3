@@ -11,7 +11,7 @@ public class Compressao {
     private int id;
     private int TAMANHODIC = 65535;
     public HashMap<String, Integer> dicionario = new HashMap<String, Integer>();
-    private int cont = 1;
+    public int cont = 1;
 
     public Compressao() throws IOException {
         id = 1;
