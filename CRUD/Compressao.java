@@ -18,11 +18,8 @@ public class Compressao {
         String aux = "codificacao";
         File arquivo;
         while(true){
-            aux += String.valueOf(cont);
-            System.out.println(aux);
-            arquivo = new File(aux+".db");
+            arquivo = new File(aux+String.valueOf(cont)+".db");
             if (arquivo.exists()){
-                aux = "codificacao";
                 cont++;
             }
             else{
