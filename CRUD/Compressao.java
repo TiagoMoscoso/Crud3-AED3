@@ -145,7 +145,7 @@ public class Compressao {
     }
 
     public void ganho() {
-        File arqcodif = new File("codificacao.db");
+        File arqcodif = new File("codificacao"+cont+".db");
         File arqoriginal = new File("netflix.db");
         if (arqcodif.exists() && arqoriginal.exists()) {
             long tamanhoarqo = arqoriginal.length() / 1000;
