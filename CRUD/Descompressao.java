@@ -1,4 +1,5 @@
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -16,6 +17,37 @@ public class Descompressao extends TableInfo
 
     TableInfo tb = new TableInfo();
     boolean restored = false;
+
+    int ProcuraArquivo()
+    {
+        int aux = 1;
+        String codi= "codificacao";
+        String deco = "decodificacao";
+
+        File arqCodi;
+        File arqDeco;
+        while(true)
+        {
+            arqCodi = new File(codi+String.valueOf(aux)+".db");
+            arqDeco = new File(deco+String.valueOf(aux)+".db");
+
+            if (arqCodi.exists())
+            {
+                if(arqDeco.exists()==false)
+                {
+                    break;
+                }
+                aux++;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+
+        return aux;
+    }
 
     public Descompressao() throws IOException {
         id = 1;
@@ -203,12 +235,13 @@ public class Descompressao extends TableInfo
     public void iniciaDescompressao() throws IOException {
 
         criaDicionario();
-        FileOutputStream file = new FileOutputStream("decodificacao.db");
+        int idarq = ProcuraArquivo();
+        FileOutputStream file = new FileOutputStream("decodificacao"+String.valueOf(idarq)+".db");
 
         DataOutputStream deco = new DataOutputStream(file);
         String laString = "";
 
-        try (RandomAccessFile codi = new RandomAccessFile("codificacao.db", "r")) 
+        try (RandomAccessFile codi = new RandomAccessFile("codificacao"+String.valueOf(idarq)+".db", "r")) 
         {
             int reader = 1;
             while(reader > -1)
@@ -226,11 +259,23 @@ public class Descompressao extends TableInfo
         {
             e.printStackTrace();
         }
-        descompressao(0, laString, deco);
         //finaliza proscesso
         
         System.out.println("Descompressao finalizada");
+        ganho(idarq);
+    }
 
+    public void ganho(int x) {
+        File arqcodif = new File("decodificacao"+String.valueOf(x)+".db");
+        File arqoriginal = new File("netflix.db");
+        if (arqcodif.exists() && arqoriginal.exists()) {
+            long tamanhoarqo = arqoriginal.length() / 1000;
+            long tamanhoarqcom = arqcodif.length() / 1000;
+            System.out.println("Tamanho do arquivo original: " + tamanhoarqo);
+            System.out.println("Tamanho do arquivo descomprimido: " + tamanhoarqcom);
+            System.out.println("Arquivo original é: " + (float) tamanhoarqo / (float) tamanhoarqcom + " vezes maior");
+            System.out.println("*O arquivos perde caracteres fora da tabela ascii (caracteres indianos,chineses e nordicos são deletados no proscesso)*");
+        }
     }
 
 }

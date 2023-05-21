@@ -43,6 +43,7 @@ public class Compressao {
     }
 
     public void iniciaCompressao() throws IOException {
+        criaDicionario();
         FileOutputStream fil2 = new FileOutputStream("codificacao"+cont+".db");
         DataOutputStream codificacao = new DataOutputStream(fil2);
         RandomAccessFile bd = new RandomAccessFile("netflix.db", "r");
