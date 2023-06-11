@@ -3,6 +3,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+
 public class TableInfo{
 	
     int ID;
@@ -202,6 +203,12 @@ public class TableInfo{
     public String[] array_registros(){
         String x = Integer.toString(ID);
         String[] aux = {x,Type,Title,Director,Cast,Country,Date_Added,Release_Year,Rate,Duration};
+        return aux;
+    }
+
+    public char[] toCharSTR()
+    {
+        char[] aux = (Integer.toString(ID) + " " + Type + " " +Title+ " " +Director +" "+ Cast +" "+Country + " " + Date_Added + " " + Release_Year + " " + Rate + " " +Duration).toCharArray();
         return aux;
     }
 
