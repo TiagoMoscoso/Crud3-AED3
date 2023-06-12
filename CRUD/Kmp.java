@@ -9,6 +9,8 @@ public class Kmp extends TableInfo
         char[] buscar = Busca.toCharArray();
         int x = 0;
         int lastID = -1;
+        int total = 0;
+        int vezes = 0;
         try 
         {
             RandomAccessFile raf = new RandomAccessFile("netflix.db", "r");
@@ -16,7 +18,7 @@ public class Kmp extends TableInfo
             raf.seek(0);
             tb.setID(0);
             raf.readInt();
-            System.out.print("Sua busca foi encontrada nos Id's :");
+            System.out.println("Sua busca foi encontrada nos Id's :");
             while(true)
             {
                 tb.readall(raf);
@@ -33,10 +35,11 @@ public class Kmp extends TableInfo
                             //printa id se achar e reseta array
                             if(lastID != tb.ID){
 
-                                System.out.print(tb.ID + " , ");
+                                System.out.print("ID: " + tb.ID);
                                 lastID = tb.ID;
                                 //printa apenas se ID != de Last ID
                             }
+                            vezes++;
                             x = 0;
                         }
                     }
@@ -63,14 +66,22 @@ public class Kmp extends TableInfo
                     }
 
                 }
+                if(vezes > 0) 
+                {
+                    System.out.print(" Vezes: "+ vezes + ",");
+                    total += vezes;
+                    vezes = 0;
+                }
+
             }
         } 
         catch (Exception e) 
         {
               
         }
-        time = System.currentTimeMillis() - time;
         System.out.println("");
+        System.out.println("Numero de matches da palavra "+ Busca +" :" + total);
+        time = System.currentTimeMillis() - time;
         System.out.println("Tempo de execucao milisegundos : " + time);
     }
 

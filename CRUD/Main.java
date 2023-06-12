@@ -7,7 +7,7 @@ public class Main {
         Cria_Arquivo.cria_db();
 
         Kmp x = new Kmp();
-        x.KMPstart("A");
+        x.KMPstart("Steven");
     }
 
 }
