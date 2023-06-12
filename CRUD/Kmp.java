@@ -8,7 +8,7 @@ public class Kmp extends TableInfo
         long time = System.currentTimeMillis();
         char[] buscar = Busca.toCharArray();
         int x = 0;
-
+        int lastID = -1;
         try 
         {
             RandomAccessFile raf = new RandomAccessFile("netflix.db", "r");
@@ -31,7 +31,12 @@ public class Kmp extends TableInfo
                         if(x == buscar.length)
                         {
                             //printa id se achar e reseta array
-                            System.out.print(tb.ID + " , ");
+                            if(lastID != tb.ID){
+
+                                System.out.print(tb.ID + " , ");
+                                lastID = tb.ID;
+                                //printa apenas se ID != de Last ID
+                            }
                             x = 0;
                         }
                     }
